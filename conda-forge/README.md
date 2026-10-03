@@ -7,7 +7,7 @@ Copy the contents of [`bw_functional/`](bw_functional/) into a PR against
 
 1. Confirm `bw-functional==0.1.0` is on PyPI:
    https://pypi.org/project/bw-functional/0.1.0/
-2. Open [`bw_functional/meta.yaml`](bw_functional/meta.yaml) and confirm
+2. Open [`bw_functional/recipe.yaml`](bw_functional/recipe.yaml) and confirm
    `extra.recipe-maintainers` lists the right GitHub usernames (currently
    `bsteubing`; add co-maintainers if needed).
 3. Optionally re-check the sdist sha256:
@@ -21,12 +21,14 @@ Copy the contents of [`bw_functional/`](bw_functional/) into a PR against
 1. Fork https://github.com/conda-forge/staged-recipes
 2. Create a branch, e.g. `add-bw-functional`
 3. Copy this directory to `recipes/bw_functional/` in the fork (so the path is
-   `recipes/bw_functional/meta.yaml`)
+   `recipes/bw_functional/recipe.yaml` — v1 format)
 4. Open a PR against `conda-forge/staged-recipes` with a short description:
    pure-Python Brightway package for multifunctional activities; deps already
    on conda-forge
-5. Wait for CI (linter + builds). Fix any review comments from conda-forge
+5. In the PR checklist, check the box that the recipe uses v1 `recipe.yaml`
+6. Wait for CI (linter + builds). Fix any review comments from conda-forge
    maintainers
+7. When ready for review, comment: `@conda-forge/help-python, ready for review!`
 
 ## After merge
 
