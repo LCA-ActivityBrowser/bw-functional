@@ -6,7 +6,7 @@ name: Publish to PyPI and Anaconda
 on:
   push:
     branches: [main, develop]
-    tags: '*'
+    tags: ['v*', '*.*.*']
 jobs:
   build-n-publish:
     name: Publish to PyPI and Anaconda
@@ -21,7 +21,16 @@ jobs:
       with:
         fetch-depth: "0"
     - name: Set version
-      run: echo "BW_FUNCTIONAL_VERSION=0.b.$(git rev-list 785f296..HEAD --count)" >> $GITHUB_ENV
+      run: |
+        if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+          VERSION="${GITHUB_REF#refs/tags/}"
+          VERSION="${VERSION#v}"
+        else
+          # Dev builds for TestPyPI / legacy LCA channel only; not published to PyPI
+          VERSION="0.1.0.dev$(git rev-list --count HEAD)"
+        fi
+        echo "BW_FUNCTIONAL_VERSION=${VERSION}" >> "$GITHUB_ENV"
+        echo "Using version ${VERSION}"
     - name: Set up Python 3.11
       uses: actions/setup-python@v5
       with:
@@ -44,6 +53,7 @@ jobs:
         repository-url: https://test.pypi.org/legacy/
         skip-existing: true
     - name: Publish distribution 📦 to PyPI
+      if: startsWith(github.ref, 'refs/tags/')
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         attestations: false
@@ -53,11 +63,12 @@ jobs:
         python-version: 3.11
         activate-environment: build
         environment-file: .github/environments/build.yml
+    # DEPRECATED: Private LCA Anaconda channel upload. Prefer conda-forge once the
+    # feedstock is live. Kept temporarily so existing LCA-channel users keep working.
     - name: Build a Conda tarbal
       run: |
         conda build -c conda-forge -c cmutel ./recipe/
-    - name: Publish to Anaconda
+    - name: Publish to Anaconda (deprecated; use conda-forge)
       run: |
         anaconda -t ${{ secrets.CONDA_LCA }} upload \
         /usr/share/miniconda/envs/build/conda-bld/noarch/*.conda
-

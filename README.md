@@ -12,7 +12,7 @@
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)][pre-commit]
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)][black]
 
-[pypi status]: https://pypi.org/project/multifunctional/
+[pypi status]: https://pypi.org/project/bw-functional/
 [read the docs]: https://multifunctional.readthedocs.io/
 [tests]: https://github.com/brightway-lca/multifunctional/actions?workflow=Tests
 [codecov]: https://app.codecov.io/gh/brightway-lca/multifunctional
@@ -29,14 +29,15 @@ You can install _bw-functional_ via [pip] from [PyPI]:
 $ pip install bw-functional
 ```
 
-[//]: # (It is also available on `anaconda` using `mamba` or `conda` at the `cmutel` channel:)
+The intended conda install is from [conda-forge](https://conda-forge.org/) (pending acceptance of the feedstock PR):
 
-[//]: # ()
-[//]: # (```console)
+```console
+$ conda install -c conda-forge bw-functional
+```
 
-[//]: # (mamba install -c conda-forge -c cmutel multifunctional)
-
-[//]: # (```)
+The package remains available for now on the private LCA Anaconda channel, but that
+channel is **deprecated** in favor of conda-forge. Prefer conda-forge once the
+package appears there.
 
 ## Usage
 

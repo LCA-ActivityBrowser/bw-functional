@@ -13,11 +13,13 @@ maintainers = [
 ]
 description = "Code for handling multifunctional activities in Brightway"
 readme = "README.md"
+license = { text = "BSD-3-Clause" }
 dynamic = ["version"]
 # Add here all kinds of additional classifiers as defined under
 # https://pypi.org/classifiers/
 classifiers = [
     "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: BSD License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
@@ -38,9 +40,9 @@ dependencies = [
 ]
 
 [project.urls]
-source = "https://github.com/brightway-lca/multifunctional"
-homepage = "https://github.com/brightway-lca/multifunctional"
-tracker = "https://github.com/brightway-lca/multifunctional/issues"
+source = "https://github.com/LCA-ActivityBrowser/bw-functional"
+homepage = "https://github.com/LCA-ActivityBrowser/bw-functional"
+tracker = "https://github.com/LCA-ActivityBrowser/bw-functional/issues"
 
 [project.optional-dependencies]
 # Getting recursive dependencies to work is a pain, this
