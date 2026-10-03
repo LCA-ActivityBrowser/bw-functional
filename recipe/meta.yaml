@@ -1,9 +1,10 @@
-# Legacy recipe for the private LCA Anaconda channel only.
-# Long-term home is conda-forge (see ../conda-forge/). Do not use this recipe
-# for staged-recipes; keep it only while LCA-channel uploads remain enabled.
+# Legacy recipe for the private LCA Anaconda channel only (deprecated).
+# Use ../conda-forge/bw_functional for staged-recipes / conda-forge.
+{% set version = environ.get("BW_FUNCTIONAL_VERSION", "dev") %}
+
 package:
   name: bw_functional
-  version: "{{ os.environ.get('BW_FUNCTIONAL_VERSION', 'dev') }}"
+  version: "{{ version }}"
 
 source:
   path: ..

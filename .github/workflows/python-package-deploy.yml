@@ -65,10 +65,15 @@ jobs:
         environment-file: .github/environments/build.yml
     # DEPRECATED: Private LCA Anaconda channel upload. Prefer conda-forge once the
     # feedstock is live. Kept temporarily so existing LCA-channel users keep working.
+    # continue-on-error: do not fail the release job if only the legacy channel breaks.
     - name: Build a Conda tarbal
+      continue-on-error: true
+      id: conda_build
       run: |
         conda build -c conda-forge -c cmutel ./recipe/
     - name: Publish to Anaconda (deprecated; use conda-forge)
+      if: steps.conda_build.outcome == 'success'
+      continue-on-error: true
       run: |
         anaconda -t ${{ secrets.CONDA_LCA }} upload \
         /usr/share/miniconda/envs/build/conda-bld/noarch/*.conda
