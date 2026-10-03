@@ -14,7 +14,10 @@ source:
 build:
   number: 0
   noarch: python
-  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  # BW_FUNCTIONAL_VERSION is required because setup.py defaults to 0.0.0 without it
+  script: |
+    export BW_FUNCTIONAL_VERSION="${{ version }}"
+    ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
