@@ -66,14 +66,19 @@ jobs:
     # DEPRECATED: Private LCA Anaconda channel upload. Prefer conda-forge once the
     # feedstock is live. Kept temporarily so existing LCA-channel users keep working.
     # continue-on-error: do not fail the release job if only the legacy channel breaks.
-    - name: Build a Conda tarbal
+    # Use the conda-build CLI (not `conda build`): modern conda no longer exposes
+    # build as a subcommand unless the plugin is installed in base.
+    - name: Build a Conda tarball
       continue-on-error: true
       id: conda_build
       run: |
-        conda build -c conda-forge -c cmutel ./recipe/
+        PKG="$(conda-build -c conda-forge -c cmutel ./recipe/ --output)"
+        conda-build -c conda-forge -c cmutel ./recipe/
+        echo "Built package: ${PKG}"
+        ls -la "${PKG}"
+        echo "CONDA_PKG_PATH=${PKG}" >> "$GITHUB_ENV"
     - name: Publish to Anaconda (deprecated; use conda-forge)
       if: steps.conda_build.outcome == 'success'
       continue-on-error: true
       run: |
-        anaconda -t ${{ secrets.CONDA_LCA }} upload \
-        /usr/share/miniconda/envs/build/conda-bld/noarch/*.conda
+        anaconda -t ${{ secrets.CONDA_LCA }} upload --user lca "${CONDA_PKG_PATH}"
