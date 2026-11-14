@@ -63,7 +63,12 @@ def _check_parameterized_exchange_for_allocation(_, name):
             continue
         process.allocate()
 
-def _check_and_update(dataset):
+def _check_and_update(sender, dataset=None, **kwargs):
+    # bw2data 4.7 and earlier send the ProjectDataset as the sender; 4.8+ send
+    # the ProjectManager as the sender and the ProjectDataset as dataset=.
+    if dataset is None:
+        dataset = sender
+
     if dataset.data is None:
         dataset.data = {}
         dataset.save()
